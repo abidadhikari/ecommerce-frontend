@@ -24,14 +24,27 @@ function LandingLayout(props: any) {
   //   }
   // };
 
-  useEffect(() => {
-    let localUser = localStorage.getItem("user");
-    localUser = JSON.parse(localUser!);
+  // useEffect(() => {
+  //   let localUser = localStorage.getItem("user");
+  //   localUser = JSON.parse(localUser!);
 
-    if (!localUser?.token) {
-      dispatch(fetchGooglogin());
+  //   if (!localUser?.token) {
+  //     dispatch(fetchGooglogin());
+  //   } else {
+  //     dispatch(setUser(localUser));
+  //   }
+  // }, []);
+  useEffect(() => {
+    const localUserString = localStorage.getItem("user");
+    if (localUserString) {
+      const localUser = JSON.parse(localUserString);
+      if ("token" in localUser) {
+        dispatch(setUser(localUser));
+      } else {
+        dispatch(fetchGooglogin());
+      }
     } else {
-      dispatch(setUser(localUser));
+      dispatch(fetchGooglogin());
     }
   }, []);
   return (

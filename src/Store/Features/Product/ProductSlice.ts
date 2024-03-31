@@ -32,7 +32,7 @@ const productSlice = createSlice({
       }
     },
 
-    updateCart(state, action: any | undefined) {
+    updateCart(state, action: { payload: { id: any; quantity: any } }) {
       const { id, quantity } = action.payload;
       const index = state.cart.findIndex((item: any) => item.id === id);
       if (quantity !== 0) {
