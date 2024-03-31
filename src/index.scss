@@ -1,0 +1,94 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+} */
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Poppins", Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+// $container-width: 1415px;
+$container-width: 1200px;
+
+.container {
+  width: $container-width;
+  @apply mx-auto my-0;
+}
+
+.loader {
+  width: 20px;
+  height: 20px;
+  border-width: 3px;
+  border-style: solid;
+
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.auth-container {
+  width: calc((100vw - $container-width) / 2 + $container-width);
+  max-width: 95vw;
+}
+
+.scrollbar-width-none {
+  &::-webkit-scrollbar {
+    /* Customize the scrollbar width */
+    width: 0px;
+  }
+
+  &::-webkit-scrollbar-track {
+    /* Customize the scrollbar track */
+  }
+
+  &::-webkit-scrollbar-thumb {
+    /* Customize the scrollbar thumb */
+  }
+}
+
+.cart-table {
+  tr {
+    box-shadow: 0px 1px 13px 0px #0000000d;
+  }
+  thead {
+    tr {
+      th {
+        @apply text-base font-normal py-[24px] px-[40px];
+      }
+    }
+  }
+  tbody {
+    tr {
+      border-collapse: separate;
+      border-spacing: 0 15px;
+      td {
+        @apply text-base font-normal py-[24px] px-[40px];
+      }
+    }
+  }
+}
