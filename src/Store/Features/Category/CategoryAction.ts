@@ -35,9 +35,6 @@ export const addCategory = createAsyncThunk(
       }
     } catch (error) {
       console.log(error);
-      if (error?.response?.data?.message) {
-        MyToast({ success: false, message: error?.response?.data?.message });
-      }
       return null;
     }
   }
