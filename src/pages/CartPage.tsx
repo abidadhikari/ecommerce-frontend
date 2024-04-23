@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import LandingLayout from "../layouts/LandingLayouts";
 import BreadCrumb from "../components/BreadCrumb";
 import { ButtonPrimary, ButtonSecondary } from "../components/utils/Buttons";
@@ -9,11 +9,17 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import Inputs from "../components/utils/Inputs";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "../Store/store";
-import { updateCart } from "../Store/Features/Product/ProductSlice";
+import { getCart, updateCart } from "../Store/Features/Cart/CartAction";
 
 function CartPage() {
   const product = useSelector((state: RootState) => state.productSlice);
+  const cart = useSelector((state: RootState) => state.cartSlice);
   const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    dispatch(getCart());
+  }, []);
+
   return (
     <LandingLayout>
       <div className="container">
@@ -35,8 +41,8 @@ function CartPage() {
             </tr>
           </thead>
           <tbody>
-            {product.cart.length &&
-              product.cart?.map((item: any) => {
+            {cart.cart.length ? (
+              cart.cart?.map((item: any) => {
                 return (
                   <>
                     <tr className="h-10 opacity-0">
@@ -46,24 +52,30 @@ function CartPage() {
                       <td>
                         <div className=" flex items-center gap-5">
                           <div className="h-[54px] w-[54px]  overflow-hidden flex items-center justify-center">
-                            <img src={item?.thumbnail} alt="" />
+                            <img src={item?.product?.thumbnail} alt="" />
                           </div>
-                          <div>{item?.title}</div>
+                          <div>{item?.product?.title}</div>
                         </div>
                       </td>
-                      <td className="text-center ">${item?.price}</td>
+                      <td className="text-center ">${item?.product?.price}</td>
                       <td className="text-center ">
                         <input
                           type="number"
                           name=""
                           id=""
                           min={1}
-                          value={item?.quantity}
+                          value={item?.count}
                           onChange={(e: any) =>
                             dispatch(
+                              // updateCart({
+                              //   id: item?.id,
+                              //   quantity: e.target.value,
+                              // })
                               updateCart({
-                                id: item?.id,
-                                quantity: e.target.value,
+                                body: {
+                                  productId: item?.productId,
+                                  count: Number(e.target.value),
+                                },
                               })
                             )
                           }
@@ -71,14 +83,21 @@ function CartPage() {
                         />
                       </td>
                       <td className="text-center">
-                        ${item?.quantity * item?.price}
+                        ${item?.count * item?.product?.price}
                       </td>
                       <td className="text-center">
                         <button
                           type="button"
                           className={`p-1 rounded-full hover:bg-slate-300 `}
                           onClick={() => {
-                            dispatch(updateCart({ id: item?.id, quantity: 0 }));
+                            dispatch(
+                              updateCart({
+                                body: {
+                                  productId: item?.productId,
+                                  count: 0,
+                                },
+                              })
+                            );
                           }}
                         >
                           <DeleteIcon />
@@ -87,7 +106,14 @@ function CartPage() {
                     </tr>
                   </>
                 );
-              })}
+              })
+            ) : (
+              <tr>
+                <td colSpan={5} style={{ textAlign: "center" }}>
+                  NO ITEMS IN CART
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
         <div className=" flex items-center justify-between mb-20">
@@ -95,7 +121,7 @@ function CartPage() {
             <ButtonSecondary text="Return To Shop" />
           </Link>
 
-          <ButtonSecondary text="Update Cart" />
+          {/* <ButtonSecondary text="Update Cart" /> */}
         </div>
         <div className="cart-bottom pb-36 flex justify-between items-start">
           <div className="flex items-center gap-4">
@@ -113,8 +139,8 @@ function CartPage() {
               <div>Subtotal:</div>
               <div>
                 $
-                {product.cart?.reduce((acc: number, item: any) => {
-                  return acc + Number(item?.quantity) * item?.price;
+                {cart.cart?.reduce((acc: number, item: any) => {
+                  return acc + Number(item?.count) * item?.product?.price;
                 }, 0)}
               </div>
             </div>
@@ -128,8 +154,8 @@ function CartPage() {
               <div>Total</div>
               <div>
                 $
-                {product.cart?.reduce((acc: number, item: any) => {
-                  return acc + Number(item?.quantity) * item?.price;
+                {cart.cart?.reduce((acc: number, item: any) => {
+                  return acc + Number(item?.count) * item?.product?.price;
                 }, 0)}
               </div>
             </div>

@@ -9,12 +9,14 @@ import IsAuthenticated from "./AuthTools/isAuthenticated";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import SearchIcon from "@mui/icons-material/Search";
 import Logo from "./Logo";
+import IsAdmin from "./AuthTools/isAdmin";
 
 function Header() {
   const [searchText, setSearchText] = useState("");
   const navigate = useNavigate();
   const ui = useSelector((state: RootState) => state.uiSlice);
   const product = useSelector((state: RootState) => state.productSlice);
+  const cart = useSelector((state: RootState) => state.cartSlice);
   const dispatch = useDispatch<AppDispatch>();
 
   console.log(product.cart);
@@ -45,7 +47,8 @@ function Header() {
             <Link to="/contact">Contact</Link>
             <Link to="/users/asfd">Users</Link>
             <Link to="/about">About</Link>
-            <Link to="/profile">Profile</Link>
+            {IsAdmin() && "ADMIN"}
+            {IsAuthenticated() && <Link to="/profile">Profile</Link>}
             {IsAuthenticated() ? (
               <>
                 <button type="button" onClick={Logout}>
@@ -88,9 +91,9 @@ function Header() {
           </form>
           <Link to="/cart" className="relative">
             <ShoppingCartIcon />
-            {product.cart?.length > 0 && (
+            {cart.cart?.length > 0 && (
               <span className="absolute top-[-15px] right-[-5px] text-[#DB4444] text-xs bg-red-200 h-[18px] w-[18px] rounded-full flex items-center justify-center">
-                {product.cart?.length}
+                {cart.cart?.length}
               </span>
             )}
           </Link>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ViewComfyIcon from "@mui/icons-material/ViewComfy";
 import WindowIcon from "@mui/icons-material/Window";
 import LayersIcon from "@mui/icons-material/Layers";
@@ -7,9 +7,10 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import CategoryIcon from "@mui/icons-material/Category";
 import Logo from "../components/Logo";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import MyIcon from "../helper/MyIcon";
 import DashboardRightHeader from "./DashboardRightHeader";
+import IsAdmin from "../components/AuthTools/isAdmin";
 
 const SideBarLink = (props: any) => {
   const { link, icon, name } = props;
@@ -30,6 +31,8 @@ const SideBarLink = (props: any) => {
 
 function DashboardLayout(props: any) {
   const { children } = props;
+  const navigate = useNavigate();
+
   return (
     <div className="flex h-screen bg-red-300">
       <div className="min-w-60 h-full  bg-white py-6 ">
@@ -66,6 +69,15 @@ function DashboardLayout(props: any) {
             icon={<SettingsIcon />}
             name="Settings"
           />
+          <button
+            type="button"
+            onClick={() => {
+              localStorage.clear();
+              navigate("/admin-login");
+            }}
+          >
+            Logout
+          </button>
         </div>
       </div>
       <div className="max-h-full w-full overflow-auto bg-[#f3f3f3] px-6 py-4 ">

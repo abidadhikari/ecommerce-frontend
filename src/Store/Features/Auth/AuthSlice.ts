@@ -28,6 +28,7 @@ const authSlice = createSlice({
   reducers: {
     clearUser(state) {
       console.log(state);
+      localStorage.clear();
       state.user = {};
       state.login_loading = false;
       state.login_success = false;

@@ -10,7 +10,9 @@ import "@fontsource/poppins/400.css"; // Specify weight
 import "@fontsource/poppins/400-italic.css"; // Specify weight and style
 import SignUpPage from "./pages/SignUpPage";
 import LoginPage from "./pages/LoginPage";
-import PrivateRoutes from "./components/utils/PrivateRoutes";
+import PrivateRoutes, {
+  PrivateAdminRoutes,
+} from "./components/utils/PrivateRoutes";
 import ProfilePage from "./pages/ProfilePage";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import AboutPage from "./pages/AboutPage";
@@ -26,6 +28,7 @@ import CategoriesPage from "./pages/Admin/CategoriesPage";
 import SearchPage from "./pages/SearchPage";
 import { Categories } from "./components/constants/categories";
 import LandingCategoryPage from "./pages/LandingCategoryPage";
+import AdminLoginPage from "./pages/Admin/AdminLoginPage";
 
 function App() {
   return (
@@ -40,9 +43,10 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/product" element={<ProductDetailPage />} />
             <Route path="/about" element={<AboutPage />} />
-            <Route path="/cart" element={<CartPage />} />
+
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/search" element={<SearchPage />} />
+            <Route path="/admin-login" element={<AdminLoginPage />} />
             {Categories.map((category: any) => {
               return (
                 <Route
@@ -52,22 +56,26 @@ function App() {
               );
             })}
 
-            <Route path="/dashboard" element={<DashboardPage />} />
-            <Route path="/customers" element={<CustomersPage />} />
-            <Route path="/orders" element={<OrdersPage />} />
-            <Route path="/products" element={<ProductsPage />} />
-            <Route
-              path="/products/create"
-              element={<AddEditProductPage type="create" />}
-            />
-            <Route
-              path="/products/edit/:id"
-              element={<AddEditProductPage type="edit" />}
-            />
-            <Route path="/categories" element={<CategoriesPage />} />
-            <Route path="/settings" element={<SettingsPage />} />
             <Route element={<PrivateRoutes />}>
               <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/cart" element={<CartPage />} />
+            </Route>
+
+            <Route element={<PrivateAdminRoutes />}>
+              <Route path="/dashboard" element={<DashboardPage />} />
+              <Route path="/customers" element={<CustomersPage />} />
+              <Route path="/orders" element={<OrdersPage />} />
+              <Route path="/products" element={<ProductsPage />} />
+              <Route
+                path="/products/create"
+                element={<AddEditProductPage type="create" />}
+              />
+              <Route
+                path="/products/edit/:id"
+                element={<AddEditProductPage type="edit" />}
+              />
+              <Route path="/categories" element={<CategoriesPage />} />
+              <Route path="/settings" element={<SettingsPage />} />
             </Route>
           </Routes>
         </BrowserRouter>

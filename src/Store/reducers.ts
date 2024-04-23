@@ -3,6 +3,7 @@ import uiSlice from "./Features/UI/uiSlice";
 import AuthSlice from "./Features/Auth/AuthSlice";
 import ProductSlice from "./Features/Product/ProductSlice";
 import CategorySlice from "./Features/Category/CategorySlice";
+import CartSlice from "./Features/Cart/CartSlice";
 // Example slice, you'll create this later
 
 const rootReducer = combineReducers({
@@ -10,6 +11,7 @@ const rootReducer = combineReducers({
   authSlice: AuthSlice,
   productSlice: ProductSlice,
   categorySlice: CategorySlice,
+  cartSlice: CartSlice,
   // Other reducers can go here
 });
 

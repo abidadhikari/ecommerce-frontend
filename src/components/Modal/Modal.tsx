@@ -5,7 +5,7 @@ function Modal(props: any) {
   return (
     <>
       {active && (
-        <div className="h-screen w-screen bg-[#000000b2] fixed top-0 left-0 grid place-items-center">
+        <div className="h-screen w-screen bg-[#000000b2] fixed top-0 left-0 grid place-items-center z-[10000]">
           {children}
         </div>
       )}

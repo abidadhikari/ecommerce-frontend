@@ -8,6 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../Store/store";
 import { loginUser } from "../Store/Features/Auth/AuthAction";
 import { useNavigate } from "react-router-dom";
+import { clearUser } from "../Store/Features/Auth/AuthSlice";
+import { clearCartLocal } from "../Store/Features/Cart/CartSlice";
 
 function LoginPage(props: any) {
   const dispatch = useDispatch<AppDispatch>();
@@ -17,6 +19,7 @@ function LoginPage(props: any) {
   const login = () => {
     dispatch(
       loginUser({ email: "suyog@test.com", password: "$hahRukhKhan059" })
+      // loginUser({ email: "admin@test.com", password: "12345678" })
     );
   };
 
@@ -27,6 +30,11 @@ function LoginPage(props: any) {
       }
     }
   }, [auth.login_loading]);
+  useEffect(() => {
+    dispatch(clearUser());
+    dispatch(clearCartLocal());
+  }, []);
+
   return (
     <LandingLayout>
       <AuthLayout
@@ -35,7 +43,15 @@ function LoginPage(props: any) {
       >
         <form action="">
           Login
-          <ButtonPrimary text="Login" onClick={login} />
+          <ButtonPrimary text="Login BASIC" onClick={login} />
+          <ButtonPrimary
+            text="Login ADMIN"
+            onClick={() => {
+              dispatch(
+                loginUser({ email: "admin@test.com", password: "12345678" })
+              );
+            }}
+          />
           <ContinueWithGoogle />
         </form>
       </AuthLayout>

@@ -3,7 +3,10 @@ import LandingLayout from "../layouts/LandingLayouts";
 import useQuery from "../helper/useQuery";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../Store/store";
-import { fetchSingleProductDetail } from "../Store/Features/Product/ProductAction";
+import {
+  fetchSingleProductDetail,
+  getSingleProduct,
+} from "../Store/Features/Product/ProductAction";
 import Spinner from "../components/Basic/Spinner";
 import ProductsSection from "../components/Product/ProductsSection";
 import { Rating } from "@mui/material";
@@ -17,7 +20,8 @@ function ProductDetailPage(props: any) {
   console.log(query, query.params, product.singleProduct);
 
   useEffect(() => {
-    dispatch(fetchSingleProductDetail(query?.productId));
+    // dispatch(fetchSingleProductDetail(query?.productId));
+    if (query?.productId) dispatch(getSingleProduct(query?.productId));
   }, []);
 
   return (
@@ -40,7 +44,10 @@ function ProductDetailPage(props: any) {
                           } `}
                           onClick={() => setCurrLargeImage(index)}
                         >
-                          <img src={e} className="h-full w-full object-cover" />
+                          <img
+                            src={e?.image}
+                            className="h-full w-full object-cover"
+                          />
                         </div>
                       );
                     }
@@ -55,7 +62,7 @@ function ProductDetailPage(props: any) {
                   <img
                     src={
                       product.singleProduct?.images
-                        ? product.singleProduct?.images[currLargeImage]
+                        ? product.singleProduct?.images[currLargeImage]?.image
                         : ""
                     }
                     className=" w-full"
