@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import MyIcon from "../helper/MyIcon";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "../Store/store";
@@ -11,9 +11,12 @@ import SearchIcon from "@mui/icons-material/Search";
 import Logo from "./Logo";
 
 function Header() {
+  const [searchText, setSearchText] = useState("");
+  const navigate = useNavigate();
   const ui = useSelector((state: RootState) => state.uiSlice);
   const product = useSelector((state: RootState) => state.productSlice);
   const dispatch = useDispatch<AppDispatch>();
+
   console.log(product.cart);
 
   return (
@@ -33,7 +36,7 @@ function Header() {
           <div className="logo font-bold text-2xl">
             <Link to="/">
               <Logo />
-              {ui.value} {IsAuthenticated() ? ":::auth:::" : "~NOT~"}
+              {/* {ui.value} {IsAuthenticated() ? ":::auth:::" : "~NOT~"} */}
             </Link>
           </div>
           <nav className="flex items-center gap-12 justify-center text-black ">
@@ -56,22 +59,33 @@ function Header() {
               </>
             )}
           </nav>
-          <div className="search bg-[#F5F5F5] rounded-[4px] relative">
+          <form
+            className="search bg-[#F5F5F5] rounded-[4px] relative"
+            onSubmit={(e: any) => {
+              e.preventDefault();
+              navigate(`/search?query=${searchText}`);
+            }}
+          >
             <input
               type="text"
               name=""
               id=""
               placeholder="What are you looking for?"
               className="text-xs leading-6 py-[7px] px-5 pr-14 bg-transparent outline-none  "
+              onChange={(e: any) => {
+                setSearchText(e.target.value);
+              }}
             />
             <button
-              type="button"
+              type="submit"
               className="absolute top-[50%] right-[12px] translate-y-[-50%]"
-              onClick={() => dispatch(increment())}
+              onClick={(e: any) => {
+                dispatch(increment());
+              }}
             >
               <SearchIcon />
             </button>
-          </div>
+          </form>
           <Link to="/cart" className="relative">
             <ShoppingCartIcon />
             {product.cart?.length > 0 && (

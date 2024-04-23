@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import Delete from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
@@ -6,42 +7,59 @@ import DashboardLayout from "../../layouts/DashboardLayout";
 import DashboardRightContent from "../../layouts/DashboardRightContent";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../Store/store";
-import { fetchAllCategories } from "../../Store/Features/Category/CategoryAction";
+import {
+  deleteCategory,
+  fetchAllCategories,
+} from "../../Store/Features/Category/CategoryAction";
 import MyTable from "../../components/shared/MyTable";
 import { ButtonPrimary } from "../../components/utils/Buttons";
 import CategoryAddEditModal from "../../components/Modal/CategoryAddEditModal";
 import Modal from "../../components/Modal/Modal";
 import DeleteModal from "../../components/Modal/DeleteModal";
+import { resetCategoryStates } from "../../Store/Features/Category/CategorySlice";
 
-function CustomersPage(props: any) {
+function CategoriesPage(props: any) {
   const dispatch = useDispatch<AppDispatch>();
   const categorySlice = useSelector((state: RootState) => state.categorySlice);
 
   const [categoryModal, setCategoryModal] = useState(false);
   const [modalType, setModalType] = useState("");
   const [deleteModal, setDeleteModal] = useState(false);
-  console.log(categorySlice);
+  const [currCategory, setCurrCategory] = useState<any>(null);
   useEffect(() => {
     dispatch(fetchAllCategories());
   }, []);
 
   useEffect(() => {
-    if (!categoryModal) {
+    if (!categoryModal && !deleteModal) {
       setModalType("");
+      setCurrCategory(null);
+      dispatch(resetCategoryStates());
     }
-  }, [categoryModal]);
+  }, [categoryModal, deleteModal]);
+
+  useEffect(() => {
+    console.log(categorySlice.loading, categorySlice.success);
+    if (!categorySlice.loading && categorySlice.success) {
+      setDeleteModal(false);
+    }
+  }, [categorySlice.loading]);
+
   return (
     <DashboardLayout>
       <DashboardRightContent>
         <div className="top-row flex items-center justify-between gap-3 mb-5">
-          <h1 className="text-lg">Customers</h1>
+          <h1 className="text-lg">Categories</h1>
           <input type="search" name="" id="" />
           <ButtonPrimary
-            onClick={() => {}}
+            onClick={() => {
+              setModalType("add");
+              setCategoryModal(true);
+            }}
             text={
               <>
                 <AddIcon />
-                Invite User
+                Add Category
               </>
             }
           />
@@ -68,7 +86,11 @@ function CustomersPage(props: any) {
                     <button
                       type="button"
                       className="action-btn"
-                      onClick={() => {}}
+                      onClick={() => {
+                        setCurrCategory(category);
+                        setModalType("edit");
+                        setCategoryModal(true);
+                      }}
                     >
                       <EditIcon />
                     </button>
@@ -76,6 +98,7 @@ function CustomersPage(props: any) {
                       type="button"
                       className="action-btn"
                       onClick={() => {
+                        setCurrCategory(category);
                         setDeleteModal(true);
                       }}
                     >
@@ -92,6 +115,7 @@ function CustomersPage(props: any) {
             type={modalType}
             active={categoryModal}
             setActive={setCategoryModal}
+            category={currCategory}
             // loading={product.action_loading}
             // success={product.action_success}
           />
@@ -100,9 +124,11 @@ function CustomersPage(props: any) {
           <DeleteModal
             active={deleteModal}
             setActive={setDeleteModal}
-            // loading={product.action_loading}
-            // success={product.action_success}
-            onDeleteClick={() => {}}
+            loading={categorySlice.loading}
+            success={categorySlice.success}
+            onDeleteClick={() => {
+              dispatch(deleteCategory(currCategory?.id));
+            }}
           />
         </Modal>
       </DashboardRightContent>
@@ -110,4 +136,4 @@ function CustomersPage(props: any) {
   );
 }
 
-export default CustomersPage;
+export default CategoriesPage;

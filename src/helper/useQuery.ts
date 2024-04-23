@@ -9,7 +9,8 @@ export default function useQuery() {
     const params = new URLSearchParams(search);
     const productId = params.get("productId");
     const size = params.get("size");
+    const query = params.get("query");
 
-    return { params, productId, size };
+    return { params, productId, size, query };
   }, [search]);
 }

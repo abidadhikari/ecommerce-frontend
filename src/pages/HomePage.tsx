@@ -14,35 +14,38 @@ import ProductsSection from "../components/Product/ProductsSection";
 import CategoryButton from "../components/CategoryButton";
 import { Categories } from "../components/constants/categories";
 import CompanyPromises from "../components/CompanyPromises";
+import { fetchAllProducts } from "../Store/Features/Product/ProductAction";
 
 function HomePage() {
   const count = useSelector((state: RootState) => state.uiSlice);
   const auth = useSelector((state: RootState) => state.authSlice);
+  const products = useSelector((state: RootState) => state.productSlice);
   const dispatch = useDispatch<AppDispatch>();
 
-  console.log("USER:::", auth.user);
+  console.log("USER:::", auth.user, products);
 
   useEffect(() => {
-    dispatch(fetchUsers());
+    // dispatch(fetchUsers());
     // dispatch(fetchGooglogin());
     // dispatch(getMe());
+    dispatch(fetchAllProducts());
   }, []);
 
   return (
     <LandingLayout>
       <div className="container">
-        THIS IS HOME PAGE {count.value} {auth?.loadUser?.name}
+        {/* THIS IS HOME PAGE {count.value} {auth?.loadUser?.name}
         {auth?.user?.name && (
           <h1>
             Welcome , {auth?.user?.name}{" "}
             {auth?.user?.isGoogleAuthenticated ? "GOOGLE" : "WEBSITE"}
           </h1>
-        )}
+        )} */}
         {auth.loading && <Spinner />}
         <ProductsSection title="Today's" bigTitle="Flash Sales">
           <div className="flex flex-wrap gap-5 justify-between my-10">
-            {!auth.loading &&
-              auth.products?.products?.map((e: any, index: number) => {
+            {!products.loading &&
+              products?.products?.map((e: any, index: number) => {
                 if (index < 4)
                   return (
                     <ProductCard
@@ -62,14 +65,20 @@ function HomePage() {
         <ProductsSection title="Categories" bigTitle="Browse By Category">
           <div className="flex flex-wrap gap-[30px] justify-between my-10">
             {Categories.map((item: any) => {
-              return <CategoryButton title={item.name} icon={item.icon} />;
+              return (
+                <CategoryButton
+                  path={`/category/${item.value}`}
+                  title={item.name}
+                  icon={item.icon}
+                />
+              );
             })}
           </div>
         </ProductsSection>
         <ProductsSection title="This Month" bigTitle="Best Selling Products">
           <div className="flex flex-wrap gap-5 justify-between my-10">
-            {!auth.loading &&
-              auth.products?.products?.map((e: any, index: number) => {
+            {!products.loading &&
+              products?.products?.map((e: any, index: number) => {
                 if (index > 4 && index < 9)
                   return (
                     <ProductCard
@@ -88,8 +97,8 @@ function HomePage() {
         </ProductsSection>
         <ProductsSection title="Our Products" bigTitle="Explore Our Products">
           <div className="flex flex-wrap gap-5 justify-between my-10">
-            {!auth.loading &&
-              auth.products?.products?.map((e: any, index: number) => {
+            {!products.loading &&
+              products?.products?.map((e: any, index: number) => {
                 if (index < 8)
                   return (
                     <ProductCard

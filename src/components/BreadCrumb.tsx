@@ -12,7 +12,7 @@ function BreadCrumb(props: any) {
           </div>
         );
       })}
-      <div>{activeLink.name}</div>
+      <div className="capitalize">{activeLink.name}</div>
     </div>
   );
 }

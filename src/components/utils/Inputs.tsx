@@ -33,3 +33,68 @@ export const AuthInput = (props: any) => {
     </div>
   );
 };
+
+export const TextInput = (props: any) => {
+  const { error, register, label, name, ...rest } = props;
+  return (
+    <div className="w-full flex flex-col gap-2">
+      <label htmlFor={name} className="text-sm">
+        <div>{label}</div>
+      </label>
+      <input
+        className={`p-2 px-4 rounded-md w-full outline-none border
+            border-[#000000] focus:border-indigo-400  hover:border-indigo-4 `}
+        autoComplete="off"
+        id={name}
+        {...(register && register(name))}
+        {...rest}
+      />
+      {error && <div className="text-xs text-red-500">{error}</div>}
+    </div>
+  );
+};
+
+export const TextAreaInput = (props: any) => {
+  const { error, register, label, name, ...rest } = props;
+  return (
+    <div className="w-full flex flex-col gap-2">
+      <label htmlFor={name} className="text-sm">
+        <div>{label}</div>
+      </label>
+      <textarea
+        className={`p-2 px-4 rounded-md w-full outline-none border
+            border-[#000000] focus:border-indigo-400  hover:border-indigo-4 `}
+        autoComplete="off"
+        id={name}
+        {...(register && register(name))}
+        {...rest}
+      />
+      {error && <div className="text-xs text-red-500">{error}</div>}
+    </div>
+  );
+};
+
+export const SelectInput = (props: any) => {
+  const { error, register, options, label, name, ...rest } = props;
+  return (
+    <div className="w-full flex flex-col gap-2">
+      <label htmlFor={name} className="text-sm">
+        <div>{label}</div>
+      </label>
+      <select
+        name={name}
+        id={name}
+        {...(register && register(name))}
+        {...rest}
+        className={`p-2 px-4 rounded-md w-full outline-none border
+        border-[#000000] focus:border-indigo-400  hover:border-indigo-4 `}
+      >
+        {options?.map((e: any) => {
+          return <option value={e.value}>{e.label}</option>;
+        })}
+      </select>
+
+      {error && <div className="text-xs text-red-500">{error}</div>}
+    </div>
+  );
+};

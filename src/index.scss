@@ -92,3 +92,32 @@ $container-width: 1200px;
     }
   }
 }
+
+.mytable__wrapper {
+  .mytable {
+    thead {
+      tr {
+        @apply shadow-lg border bg-[#DB4444] text-slate-50;
+        th {
+          padding: 1rem 0.8rem;
+          @apply font-medium;
+        }
+      }
+    }
+    tbody {
+      tr {
+        // vertical-align: text-top;
+        td {
+          padding: 0.5rem 0.8rem;
+          // vertical-align: text-top;
+          .action-btn {
+            @apply text-sm text-[#3333] p-1 rounded-full hover:bg-slate-300 hover:shadow-sm hover:text-[#333];
+          }
+        }
+        &:nth-child(even) {
+          @apply bg-[#f4f4f4];
+        }
+      }
+    }
+  }
+}

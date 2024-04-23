@@ -5,9 +5,11 @@ import LayersIcon from "@mui/icons-material/Layers";
 import GroupIcon from "@mui/icons-material/Group";
 import SettingsIcon from "@mui/icons-material/Settings";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import CategoryIcon from "@mui/icons-material/Category";
 import Logo from "../components/Logo";
 import { Link, NavLink } from "react-router-dom";
 import MyIcon from "../helper/MyIcon";
+import DashboardRightHeader from "./DashboardRightHeader";
 
 const SideBarLink = (props: any) => {
   const { link, icon, name } = props;
@@ -45,6 +47,11 @@ function DashboardLayout(props: any) {
           />
           <SideBarLink link="/products" icon={<WindowIcon />} name="Products" />
           <SideBarLink
+            link="/categories"
+            icon={<CategoryIcon />}
+            name="Categories"
+          />
+          <SideBarLink
             link="/customers"
             icon={<GroupIcon />}
             name="Customers"
@@ -59,14 +66,10 @@ function DashboardLayout(props: any) {
             icon={<SettingsIcon />}
             name="Settings"
           />
-          <SideBarLink
-            link="/dashboard"
-            icon={<WindowIcon />}
-            name="Dashboard"
-          />
         </div>
       </div>
-      <div className="max-h-full w-full overflow-auto bg-[#f3f3f3] p-6 ">
+      <div className="max-h-full w-full overflow-auto bg-[#f3f3f3] px-6 py-4 ">
+        <DashboardRightHeader />
         {children}
       </div>
     </div>

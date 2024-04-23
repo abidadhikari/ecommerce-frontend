@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../Store/store";
 import { addToCart } from "../../Store/Features/Product/ProductSlice";
+import { findDiscountPercentage } from "../../helper/discountPercent";
 
 function ProductCard(props: any) {
   const { title, image, rating, stock, productId, price, product } = props;
@@ -11,9 +12,17 @@ function ProductCard(props: any) {
   return (
     <div className="w-[270px] mb-5 ">
       <div className="img-wrapper group w-full h-[250px] bg-slate-200 mb-4 flex items-center justify-center overflow-hidden relative rounded-[4px] ">
-        <div className="bg-[#DB4444] px-3 py-1 rounded-[4px] absolute top-3 left-3 text-xs text-white">
-          -80%
-        </div>
+        {findDiscountPercentage(product?.price, product?.crossedPrice) ? (
+          <div className="bg-[#DB4444] px-3 py-1 rounded-[4px] absolute top-3 left-3 text-xs text-white">
+            {findDiscountPercentage(product?.price, product?.crossedPrice) &&
+              `-${findDiscountPercentage(
+                product?.price,
+                product?.crossedPrice
+              )}%`}
+          </div>
+        ) : (
+          ""
+        )}
         <img src={image} alt="" className="object-contain" />
         <button
           type="button"
@@ -29,7 +38,11 @@ function ProductCard(props: any) {
         <h3 className="font-medium  text-base mb-2">{title}</h3>
         <div className="price-row flex gap-3 mb-2">
           <div className="curr-price text-[#DB4444]">${price}</div>
-          <div className="crossed-price line-through opacity-50">$160</div>
+          {product?.crossedPrice && product?.crossedPrice !== 0 && (
+            <div className="crossed-price line-through opacity-50">
+              ${product?.crossedPrice}
+            </div>
+          )}
         </div>
         <div className="rating-row text-sm flex items-center gap-2">
           {rating && (
@@ -40,7 +53,7 @@ function ProductCard(props: any) {
               readOnly
             />
           )}
-          <div className="opacity-50"> ({stock})</div>
+          {/* <div className="opacity-50"> ({stock})</div> */}
         </div>
       </Link>
     </div>

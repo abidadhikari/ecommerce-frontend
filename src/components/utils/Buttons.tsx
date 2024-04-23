@@ -14,13 +14,13 @@ function Buttons(props: any) {
 export default Buttons;
 
 export const ButtonPrimary = (props: any) => {
-  const { text, loading, fullWidth, disabled, ...rest } = props;
+  const { text, loading, fullWidth, small, disabled, ...rest } = props;
   return (
     <button
       type="button"
-      className={` p-4 px-12 cursor-pointer font-medium text-white rounded-[4px] flex items-center justify-center gap-2 ${
+      className={` cursor-pointer font-medium text-white rounded-[4px] flex items-center justify-center gap-2 ${
         disabled ? "bg-gray-400" : "bg-[#DB4444] hover:bg-[#aa2d2d] "
-      } ${fullWidth ? "w-full" : ""} `}
+      } ${fullWidth ? "w-full" : ""} ${small ? "p-2 px-5" : "  p-4 px-12"} `}
       disabled={loading || disabled}
       {...rest}
     >
@@ -30,14 +30,14 @@ export const ButtonPrimary = (props: any) => {
 };
 
 export const ButtonSecondary = (props: any) => {
-  const { text, loading, disabled, ...rest } = props;
+  const { text, loading, small, disabled, ...rest } = props;
   const navigate = useNavigate();
   return (
     <button
       type="button"
-      className={` p-4 px-12 cursor-pointer font-medium text-black rounded-[4px] flex items-center justify-center gap-2 border border-[#00000080] ${
+      className={` cursor-pointer font-medium text-black rounded-[4px] flex items-center justify-center gap-2 border border-[#00000080] ${
         disabled ? "bg-gray-400" : "bg-[#fff] hover:bg-[#f4f4f4] "
-      } `}
+      } ${small ? "p-2 px-5" : "  p-4 px-12"} `}
       disabled={loading || disabled}
       {...rest}
     >

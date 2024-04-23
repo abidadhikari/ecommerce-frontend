@@ -11,7 +11,6 @@ function ProductsSection(props: any) {
       </div>
 
       <>
-        {" "}
         <div className="flex justify-between">
           <div className="font-semibold text-[36px] leading-[48px]">
             {bigTitle}
