@@ -98,3 +98,29 @@ export const SelectInput = (props: any) => {
     </div>
   );
 };
+
+export const RadioInput = (props: any) => {
+  const { options, value, name, setValue } = props;
+  return (
+    <div className="flex flex-col gap-5">
+      {options?.map((item: any) => {
+        return (
+          <div className="flex items-center gap-3">
+            <input
+              type="radio"
+              name={name}
+              value={item.value}
+              id={item.value}
+              className="h-4 w-4 cursor-pointer"
+              checked={value === item.value}
+              onClick={() => {
+                setValue(item.value);
+              }}
+            />
+            <label htmlFor={item.value}>{item.label}</label>
+          </div>
+        );
+      })}
+    </div>
+  );
+};

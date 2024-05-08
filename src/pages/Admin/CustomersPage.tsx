@@ -12,17 +12,19 @@ import { ButtonPrimary } from "../../components/utils/Buttons";
 import CategoryAddEditModal from "../../components/Modal/CategoryAddEditModal";
 import Modal from "../../components/Modal/Modal";
 import DeleteModal from "../../components/Modal/DeleteModal";
+import { getAllUsers } from "../../Store/Features/User/UserAction";
 
 function CustomersPage(props: any) {
   const dispatch = useDispatch<AppDispatch>();
   const categorySlice = useSelector((state: RootState) => state.categorySlice);
+  const userSlice = useSelector((state: RootState) => state.userSlice);
 
   const [categoryModal, setCategoryModal] = useState(false);
   const [modalType, setModalType] = useState("");
   const [deleteModal, setDeleteModal] = useState(false);
   console.log(categorySlice);
   useEffect(() => {
-    dispatch(fetchAllCategories());
+    dispatch(getAllUsers());
   }, []);
 
   useEffect(() => {
@@ -51,16 +53,24 @@ function CustomersPage(props: any) {
             { title: "Name", align: "left", visible: true },
             // { title: "Name", align: "center", visible: true },
 
-            { title: "No of Products", align: "center", visible: true },
+            { title: "Email", align: "center", visible: true },
+            { title: "Google User?", align: "center", visible: true },
+            { title: "Is Verified?", align: "center", visible: true },
             { title: "Action", align: "right", visible: true },
           ]}
         >
-          {categorySlice?.categories?.map((category: any, index: number) => {
+          {userSlice?.allUsers?.map((user: any, index: number) => {
             return (
               <tr key={index}>
-                <td style={{ minWidth: 150 }}>{category.name}</td>
+                <td style={{ minWidth: 150 }}>{user.name}</td>
                 <td style={{ minWidth: 150 }} className="text-center">
-                  {category?.products?.length ?? "-"}
+                  {user?.email ?? "-"}
+                </td>
+                <td style={{ minWidth: 150 }} className="text-center">
+                  {user?.isGoogleAuthenticated ? "YES" : "-"}
+                </td>
+                <td style={{ minWidth: 150 }} className="text-center">
+                  {user?.isVerified ? "YES" : "-"}
                 </td>
                 <td style={{ minWidth: 150 }}>
                   {" "}

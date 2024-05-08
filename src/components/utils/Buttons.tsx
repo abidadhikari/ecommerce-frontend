@@ -14,7 +14,7 @@ function Buttons(props: any) {
 export default Buttons;
 
 export const ButtonPrimary = (props: any) => {
-  const { text, loading, fullWidth, small, disabled, ...rest } = props;
+  const { text, loading, fullWidth, onClick, small, disabled, ...rest } = props;
   return (
     <button
       type="button"
@@ -22,6 +22,7 @@ export const ButtonPrimary = (props: any) => {
         disabled ? "bg-gray-400" : "bg-[#DB4444] hover:bg-[#aa2d2d] "
       } ${fullWidth ? "w-full" : ""} ${small ? "p-2 px-5" : "  p-4 px-12"} `}
       disabled={loading || disabled}
+      onClick={onClick}
       {...rest}
     >
       {text} {loading && <Spinner white />}

@@ -6,3 +6,10 @@ export const setAccessToken = () => {
     axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
   }
 };
+
+export const hasAccessToken = () => {
+  if (localStorage.getItem("access_token")) {
+    return true;
+  }
+  return false;
+};
