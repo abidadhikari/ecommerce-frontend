@@ -18,9 +18,9 @@ function LoginPage(props: any) {
 
   const login = () => {
     dispatch(
-      loginUser({ email: "liam@example.com", password: "12345678" })
+      // loginUser({ email: "liam@example.com", password: "12345678" })
       // loginUser({ email: "suyog@test.com", password: "$hahRukhKhan059" })
-      // loginUser({ email: "alice@example.com", password: "12345678" })
+      loginUser({ email: "alice@example.com", password: "12345678" })
       // loginUser({ email: "admin@test.com", password: "12345678" })
     );
   };
