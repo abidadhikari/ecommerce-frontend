@@ -1,18 +1,24 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { BASE_URL, BASE_URL_BASE } from "../../../helper/urlConfig";
-import { setAccessToken } from "../../../components/AuthTools/accessToken";
+import {
+  hasAccessToken,
+  setAccessToken,
+} from "../../../components/AuthTools/accessToken";
 import { MyToast } from "../../../helper/MyToast";
+import IsAuthenticated from "../../../components/AuthTools/isAuthenticated";
 
 //get cart
 export const getCart = createAsyncThunk("getCart", async () => {
   setAccessToken();
   try {
-    const response = await axios.get(`${BASE_URL}/cart`);
-    if (response.status === 200) {
-      return response.data;
-    } else {
-      throw "Cart Data fetch error";
+    if (hasAccessToken()) {
+      const response = await axios.get(`${BASE_URL}/cart`);
+      if (response.status === 200) {
+        return response.data;
+      } else {
+        throw "Cart Data fetch error";
+      }
     }
   } catch (error) {
     // console.log(error);

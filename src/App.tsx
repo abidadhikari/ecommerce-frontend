@@ -29,6 +29,8 @@ import SearchPage from "./pages/SearchPage";
 import { Categories } from "./components/constants/categories";
 import LandingCategoryPage from "./pages/LandingCategoryPage";
 import AdminLoginPage from "./pages/Admin/AdminLoginPage";
+import OrderConfirmPage from "./pages/OrderConfirmPage";
+import OrdersDetailPage from "./pages/Admin/OrdersDetailPage";
 
 function App() {
   return (
@@ -59,12 +61,14 @@ function App() {
             <Route element={<PrivateRoutes />}>
               <Route path="/profile" element={<ProfilePage />} />
               <Route path="/cart" element={<CartPage />} />
+              <Route path="/order-confirm" element={<OrderConfirmPage />} />
             </Route>
 
             <Route element={<PrivateAdminRoutes />}>
               <Route path="/dashboard" element={<DashboardPage />} />
               <Route path="/customers" element={<CustomersPage />} />
               <Route path="/orders" element={<OrdersPage />} />
+              <Route path="/orders/:id" element={<OrdersDetailPage />} />
               <Route path="/products" element={<ProductsPage />} />
               <Route
                 path="/products/create"

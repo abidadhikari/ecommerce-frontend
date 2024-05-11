@@ -195,3 +195,21 @@ export const searchProducts = createAsyncThunk(
     }
   }
 );
+
+export const getProductsPerCategoryStats = createAsyncThunk(
+  "getProductsPerCategoryStats",
+  async () => {
+    try {
+      const response = await axios.get(
+        `${BASE_URL}/products/products-per-category`
+      );
+      if (response.status === 200) {
+        return response.data;
+      } else {
+        throw "Data Fetch error";
+      }
+    } catch (error) {
+      // console.log(error);
+    }
+  }
+);

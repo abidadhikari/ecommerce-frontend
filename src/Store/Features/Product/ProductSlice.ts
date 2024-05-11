@@ -9,6 +9,7 @@ import {
   fetchAllProducts,
   fetchSingleProductDetail,
   getProductImage,
+  getProductsPerCategoryStats,
   getSingleProduct,
   searchProducts,
   updateProduct,
@@ -29,6 +30,7 @@ const initialState: any = {
   product_image_success: false,
   productImages: [],
   cart: [],
+  productsPerCategoryStat: [],
 };
 
 const productSlice = createSlice({
@@ -263,6 +265,22 @@ const productSlice = createSlice({
         state.success = true;
       })
       .addCase(searchProducts.rejected, (state, action) => {
+        state.loading = false;
+        state.success = false;
+      });
+
+    //products per category
+    builder
+      .addCase(getProductsPerCategoryStats.pending, (state) => {
+        state.loading = true;
+        state.success = false;
+      })
+      .addCase(getProductsPerCategoryStats.fulfilled, (state, action) => {
+        state.loading = false;
+        state.productsPerCategoryStat = action.payload?.data;
+        state.success = true;
+      })
+      .addCase(getProductsPerCategoryStats.rejected, (state, action) => {
         state.loading = false;
         state.success = false;
       });

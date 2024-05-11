@@ -20,6 +20,7 @@ function CartPage() {
     dispatch(getCart());
   }, []);
 
+  console.log(cart.cart);
   return (
     <LandingLayout>
       <div className="container">
@@ -161,7 +162,9 @@ function CartPage() {
             </div>
 
             <div>
-              <ButtonPrimary text="Procees to checkout" fullWidth />
+              <Link to="/order-confirm?routed_from=cart">
+                <ButtonPrimary text="Procees to checkout" fullWidth />
+              </Link>
             </div>
           </div>
         </div>
