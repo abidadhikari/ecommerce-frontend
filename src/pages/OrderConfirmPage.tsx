@@ -9,7 +9,7 @@ import { placeOrders } from "../Store/Features/Order/OrderAction";
 import { useNavigate } from "react-router-dom";
 
 function OrderConfirmPage(props: any) {
-  const [paymentType, setPaymentType] = useState("cod");
+  const [paymentType, setPaymentType] = useState("esewa");
   const product = useSelector((state: RootState) => state.productSlice);
   const cart = useSelector((state: RootState) => state.cartSlice);
   const order = useSelector((state: RootState) => state.orderSlice);
@@ -20,17 +20,20 @@ function OrderConfirmPage(props: any) {
   }, []);
 
   const onPlaceOrderClick = () => {
-    dispatch(
-      placeOrders({
-        body: cart.cart?.map((item: any, index: number) => {
-          return {
-            productId: item.productId,
-            quantity: item.count,
-            orderPrice: item.product.price * item.count,
-          };
-        }),
-      })
-    );
+    if (paymentType === "esewa") {
+      alert("ESEWA");
+    } else
+      dispatch(
+        placeOrders({
+          body: cart.cart?.map((item: any, index: number) => {
+            return {
+              productId: item.productId,
+              quantity: item.count,
+              orderPrice: item.product.price * item.count,
+            };
+          }),
+        })
+      );
   };
 
   useEffect(() => {
@@ -87,6 +90,19 @@ function OrderConfirmPage(props: any) {
               />
               <div className="h-5" />
               <ButtonPrimary text="Place Order" onClick={onPlaceOrderClick} />
+
+              {/* <form action="https://uat.esewa.com.np/epay/main" method="POST">
+            <input value="<?php echo $total;?>" name="tAmt" type="hidden">
+            <input value="<?php echo $total;?>" name="amt" type="hidden">
+            <input value="0" name="txAmt" type="hidden">
+            <input value="0" name="psc" type="hidden">
+            <input value="0" name="pdc" type="hidden">
+            <input value="epay_payment" name="scd" type="hidden">
+            <input value="<?php echo $invoice_no;?>" name="pid" type="hidden">
+            <input value="http://localhost/ecommercelab/LAB9/success.php" type="hidden" name="su">
+            <input value="http://localhost/ecommercelab/LAB9/failure.php" type="hidden" name="fu">
+            <button type="submit">Pay using Esewa</button>
+        </form> */}
             </div>
           </div>
         </div>
