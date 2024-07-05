@@ -31,11 +31,15 @@ import LandingCategoryPage from "./pages/LandingCategoryPage";
 import AdminLoginPage from "./pages/Admin/AdminLoginPage";
 import OrderConfirmPage from "./pages/OrderConfirmPage";
 import OrdersDetailPage from "./pages/Admin/OrdersDetailPage";
+
 import PaymentSuccess from "./pages/PaymentPages/PaymentSuccess";
 import PaymentFailed from "./pages/PaymentPages/PaymentFailed";
 import OrderSuccess from "./pages/PaymentPages/OrderSuccess";
 import ScrollToTop from "./components/utils/ScrollToTop";
 import MyOrders from "./pages/MyOrders";
+
+import Errorpage from "./pages/Errorpage";
+
 
 function App() {
   return (
@@ -91,6 +95,8 @@ function App() {
               <Route path="/categories" element={<CategoriesPage />} />
               <Route path="/settings" element={<SettingsPage />} />
             </Route>
+            
+            <Route path="*" element= {<Errorpage />}/>
           </Routes>
         </BrowserRouter>
       </GoogleOAuthProvider>
