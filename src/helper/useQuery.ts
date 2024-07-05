@@ -10,7 +10,8 @@ export default function useQuery() {
     const productId = params.get("productId");
     const size = params.get("size");
     const query = params.get("query");
+    const ordersGroup = params.get("ordersId");
 
-    return { params, productId, size, query };
+    return { params, productId, size, query, ordersGroup };
   }, [search]);
 }

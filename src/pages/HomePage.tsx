@@ -43,7 +43,7 @@ function HomePage() {
         )} */}
         {auth.loading && <Spinner />}
         <ProductsSection title="Today's" bigTitle="Flash Sales">
-          <div className="flex flex-wrap gap-5 justify-between my-10">
+          <div className="flex flex-wrap gap-5 justify-center md:justify-between my-10">
             {!products.loading &&
               products?.products?.map((e: any, index: number) => {
                 if (index < 4)
@@ -76,7 +76,7 @@ function HomePage() {
           </div>
         </ProductsSection>
         <ProductsSection title="This Month" bigTitle="Best Selling Products">
-          <div className="flex flex-wrap gap-5 justify-between my-10">
+          <div className="flex flex-wrap gap-5 justify-center md:justify-between my-10">
             {!products.loading &&
               products?.products?.map((e: any, index: number) => {
                 if (index > 4 && index < 9)
@@ -96,7 +96,7 @@ function HomePage() {
           </div>
         </ProductsSection>
         <ProductsSection title="Our Products" bigTitle="Explore Our Products">
-          <div className="flex flex-wrap gap-5 justify-between my-10">
+          <div className="flex flex-wrap gap-5 justify-center md:justify-between my-10">
             {!products.loading &&
               products?.products?.map((e: any, index: number) => {
                 if (index < 8)

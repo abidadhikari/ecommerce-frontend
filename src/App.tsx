@@ -31,6 +31,11 @@ import LandingCategoryPage from "./pages/LandingCategoryPage";
 import AdminLoginPage from "./pages/Admin/AdminLoginPage";
 import OrderConfirmPage from "./pages/OrderConfirmPage";
 import OrdersDetailPage from "./pages/Admin/OrdersDetailPage";
+import PaymentSuccess from "./pages/PaymentPages/PaymentSuccess";
+import PaymentFailed from "./pages/PaymentPages/PaymentFailed";
+import OrderSuccess from "./pages/PaymentPages/OrderSuccess";
+import ScrollToTop from "./components/utils/ScrollToTop";
+import MyOrders from "./pages/MyOrders";
 
 function App() {
   return (
@@ -38,6 +43,7 @@ function App() {
       <Toaster position="top-center" />
       <GoogleOAuthProvider clientId="692496984930-vs63scc0e53tm6lnvrmkvtrn3148o5r3.apps.googleusercontent.com">
         <BrowserRouter>
+          <ScrollToTop />
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/users/:id" element={<UserPage />} />
@@ -60,8 +66,12 @@ function App() {
 
             <Route element={<PrivateRoutes />}>
               <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/my-orders" element={<MyOrders />} />
               <Route path="/cart" element={<CartPage />} />
               <Route path="/order-confirm" element={<OrderConfirmPage />} />
+              <Route path="/payment_success" element={<PaymentSuccess />} />
+              <Route path="/payment_failure" element={<PaymentFailed />} />
+              <Route path="/order_success" element={<OrderSuccess />} />
             </Route>
 
             <Route element={<PrivateAdminRoutes />}>

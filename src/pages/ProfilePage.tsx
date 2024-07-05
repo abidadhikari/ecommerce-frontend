@@ -7,6 +7,10 @@ import Spinner from "../components/Basic/Spinner";
 import { displayDate } from "../helper/dateFormat";
 import { clearOrderState } from "../Store/Features/Order/OrderSlice";
 import { deleteMyOrder, getOrders } from "../Store/Features/Order/OrderAction";
+import BreadCrumb from "../components/BreadCrumb";
+import { Link, NavLink } from "react-router-dom";
+import ProfileLayout from "../components/ProfileLayout";
+import { TextInput } from "../components/utils/Inputs";
 
 function ProfilePage(props: any) {
   const count = useSelector((state: RootState) => state.uiSlice);
@@ -24,24 +28,45 @@ function ProfilePage(props: any) {
   return (
     <LandingLayout>
       <div className="container ">
-        <div className="my-36">
-          PROFILE
-          <h1>
-            Welcome ,{auth.user.name} {auth.loading && <Spinner />}
-          </h1>
-          <h2>{auth.user.email}</h2>
-          <h2>
-            {auth.user.createdAt}
-            <br /> {displayDate(auth.user.createdAt, true)}
-          </h2>
-          <h2>{auth.user.role}</h2>
-          <h2>{auth.user.updateddAt}</h2>
-          <h2>{auth.user.id}</h2>
-          <h2>Account VErified??{auth.user.isVerified ? "YES" : "No"}</h2>
-          <h2>{auth.user.createdAt}</h2>
-        </div>
+        <BreadCrumb
+          ghostLink={[{ name: "Home", link: "/" }]}
+          activeLink={{ name: "My Profile", link: "/profile" }}
+        />
 
-        <div>
+        <ProfileLayout>
+          <div className="">
+            <div className="flex items-center justify-end mb-10">
+              <span>
+                Welcome,{" "}
+                <span className="text-[#DB4444]">{auth.user.name}</span>{" "}
+              </span>
+            </div>
+            <div className="grid grid-cols-2 gap-5 mb-5">
+              <TextInput label="Name" value={auth.user.name} readOnly />
+              <TextInput label="Id" value={auth.user.id} readOnly />
+              <TextInput label="Email" value={auth.user.email} readOnly />
+              <TextInput label="Role" value={auth.user.role} readOnly />
+
+              <TextInput
+                label="Created At"
+                value={displayDate(auth.user.createdAt, true)}
+                readOnly
+              />
+              <TextInput
+                label="Updated At"
+                value={displayDate(auth.user.updatedAt, true)}
+                readOnly
+              />
+              <TextInput
+                label="Account Verified"
+                value={auth.user.isVerified ? "YES" : "No"}
+                readOnly
+              />
+            </div>
+          </div>
+        </ProfileLayout>
+
+        {/* <div>
           {order.myOrders.map((item: any) => {
             return (
               <div className="flex gap-4">
@@ -62,7 +87,7 @@ function ProfilePage(props: any) {
               </div>
             );
           })}
-        </div>
+        </div> */}
       </div>
     </LandingLayout>
   );

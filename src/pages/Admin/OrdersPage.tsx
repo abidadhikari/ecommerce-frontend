@@ -45,6 +45,8 @@ function OrdersPage(props: any) {
 
             { title: "Customer Email", align: "center", visible: true },
             { title: "Status", align: "center", visible: true },
+            { title: "Payment", align: "center", visible: true },
+            { title: "Message", align: "left", visible: true },
             { title: "Quantity", align: "right", visible: true },
             { title: "Total Price", align: "right", visible: true },
             { title: "Action", align: "right", visible: true },
@@ -72,7 +74,13 @@ function OrdersPage(props: any) {
                   <td style={{ minWidth: 150 }} className="text-center">
                     {item?.status ?? "-"}
                   </td>
-                  <td style={{ minWidth: 150 }} className="text-right">
+                  <td style={{ minWidth: 150 }} className="text-center">
+                    {item?.payment_type ?? "-"}
+                  </td>
+                  <td style={{ minWidth: 150 }} className="text-center">
+                    {item?.customMessageToCustomer ?? "-"}
+                  </td>
+                  <td style={{ minWidth: 50 }} className="text-right">
                     {item?.quantity}
                   </td>
                   <td style={{ minWidth: 150 }} className="text-right">
@@ -87,13 +95,13 @@ function OrdersPage(props: any) {
                       >
                         View Details
                       </Link>
-                      <button
+                      {/* <button
                         type="button"
                         className="action-btn"
                         onClick={() => {}}
                       >
                         <EditIcon />
-                      </button>
+                      </button> */}
                       <button
                         type="button"
                         className="action-btn"

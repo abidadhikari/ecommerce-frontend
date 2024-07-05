@@ -21,7 +21,19 @@ function OrderConfirmPage(props: any) {
 
   const onPlaceOrderClick = () => {
     if (paymentType === "esewa") {
-      alert("ESEWA");
+      dispatch(
+        placeOrders({
+          body: cart.cart?.map((item: any, index: number) => {
+            return {
+              payment_type: "ESEWA",
+              status: "ON_HOLD",
+              productId: item.productId,
+              quantity: item.count,
+              orderPrice: item.product.price * item.count,
+            };
+          }),
+        })
+      );
     } else
       dispatch(
         placeOrders({
@@ -36,18 +48,67 @@ function OrderConfirmPage(props: any) {
       );
   };
 
+  const esewaCall = (orderItem: any) => {
+    const path = "https://uat.esewa.com.np/epay/main";
+    const params: any = {
+      amt: orderItem?.orderPrice,
+      psc: 0,
+      pdc: 0,
+      txAmt: 0,
+      tAmt: orderItem?.orderPrice,
+      pid: orderItem?.id,
+      scd: "EPAYTEST",
+      su:
+        "http://localhost:5173/payment_success" +
+        `?ordersId=${order.currOrderStatus.orders?.reduce(
+          (acc: string, item: any) => {
+            return acc + "~" + item?.id;
+          },
+          ""
+        )}`,
+      fu: "http://localhost:5173/payment_failure",
+    };
+    console.log(params);
+    const form = document.createElement("form");
+    form.setAttribute("method", "POST");
+    form.setAttribute("action", path);
+    for (const key in params) {
+      const hiddenField = document.createElement("input");
+      hiddenField.setAttribute("type", "hidden");
+      hiddenField.setAttribute("name", key);
+      hiddenField.setAttribute("value", params[key]);
+      form.appendChild(hiddenField);
+    }
+
+    document.body.appendChild(form);
+    form.submit();
+  };
+
   useEffect(() => {
     if (!order.loading && order.success) {
-      navigate("/profile");
+      // navigate("/profile");
+      if (order.currOrderStatus?.payment_type === "ESEWA")
+        esewaCall({
+          id: order.currOrderStatus?.orders[0]?.id,
+          orderPrice: order.currOrderStatus.orders?.reduce(
+            (acc: number, item: any) => {
+              return acc + item?.orderPrice;
+            },
+            0
+          ),
+        });
+      else {
+        navigate("/order_success");
+      }
     }
   }, [order.loading]);
 
   return (
     <LandingLayout>
       ORDER PAGE
-      <div className="container">
+      <div className="container ">
         <h1>Billing Details</h1>
-        <div className="flex justify-between">
+        <div className="flex justify-between mb-10">
           <div className="form_left">sdaf</div>
           <div className="item_right">
             <div className="small_row flex flex-col">
@@ -89,20 +150,9 @@ function OrderConfirmPage(props: any) {
                 ]}
               />
               <div className="h-5" />
-              <ButtonPrimary text="Place Order" onClick={onPlaceOrderClick} />
-
-              {/* <form action="https://uat.esewa.com.np/epay/main" method="POST">
-            <input value="<?php echo $total;?>" name="tAmt" type="hidden">
-            <input value="<?php echo $total;?>" name="amt" type="hidden">
-            <input value="0" name="txAmt" type="hidden">
-            <input value="0" name="psc" type="hidden">
-            <input value="0" name="pdc" type="hidden">
-            <input value="epay_payment" name="scd" type="hidden">
-            <input value="<?php echo $invoice_no;?>" name="pid" type="hidden">
-            <input value="http://localhost/ecommercelab/LAB9/success.php" type="hidden" name="su">
-            <input value="http://localhost/ecommercelab/LAB9/failure.php" type="hidden" name="fu">
-            <button type="submit">Pay using Esewa</button>
-        </form> */}
+              {!order.loading && (
+                <ButtonPrimary text="Place Order" onClick={onPlaceOrderClick} />
+              )}
             </div>
           </div>
         </div>

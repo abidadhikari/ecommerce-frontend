@@ -5,6 +5,7 @@ import LayersIcon from "@mui/icons-material/Layers";
 import GroupIcon from "@mui/icons-material/Group";
 import SettingsIcon from "@mui/icons-material/Settings";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import LogoutIcon from "@mui/icons-material/Logout";
 import CategoryIcon from "@mui/icons-material/Category";
 import Logo from "../components/Logo";
 import { Link, NavLink, useNavigate } from "react-router-dom";
@@ -69,7 +70,7 @@ function DashboardLayout(props: any) {
             icon={<SettingsIcon />}
             name="Settings"
           />
-          <button
+          {/* <button
             type="button"
             onClick={() => {
               localStorage.clear();
@@ -77,6 +78,16 @@ function DashboardLayout(props: any) {
             }}
           >
             Logout
+          </button> */}
+          <button
+            type="button"
+            className="flex items-center gap-4 p-4 w-full  hover:bg-slate-300 hover:text-[#DB4444]  text-[#CDCDCD] "
+            onClick={() => {
+              localStorage.clear();
+              navigate("/admin-login");
+            }}
+          >
+            <LogoutIcon /> Logout
           </button>
         </div>
       </div>

@@ -1,5 +1,6 @@
 import React from "react";
 import { ButtonPrimary } from "../utils/Buttons";
+import { Link } from "react-router-dom";
 
 function ProductsSection(props: any) {
   const { children, title, bigTitle, topSection } = props;
@@ -12,10 +13,12 @@ function ProductsSection(props: any) {
 
       <>
         <div className="flex justify-between">
-          <div className="font-semibold text-[36px] leading-[48px]">
+          <div className="font-semibold text-[20px] md:text-[36px] leading-[48px]">
             {bigTitle}
           </div>
-          <ButtonPrimary text="View All" />
+          <Link to="/search">
+            <ButtonPrimary text="View All" />
+          </Link>
         </div>
       </>
 
