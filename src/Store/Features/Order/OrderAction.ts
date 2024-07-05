@@ -99,6 +99,7 @@ export const placeOrders = createAsyncThunk(
       const response = await axios.post(`${BASE_URL}/orders`, body);
       if (response.status === 201) {
         MyToast({ success: true, message: response.data.message });
+        console.log(response.data);
         return response.data;
       } else {
         return response.data;

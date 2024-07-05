@@ -5,11 +5,11 @@ function AuthLayout(props: any) {
   const { title, description, children } = props;
   return (
     <div className=" my-14 mb-36">
-      <div className="auth-container  flex items-center justify-between gap-[130px] ">
-        <div className="w-full  h-[780px] overflow-hidden">
+      <div className="auth-container flex items-center justify-between gap-[130px] ">
+        <div className="w-full  h-[780px] overflow-hidden hidden md:block">
           <img src={authSideImage} alt="phones" className="" />
         </div>
-        <div className="min-w-[370px] max-w-[370px]  flex flex-col ">
+        <div className="w-[90%] my-0 mx-auto md:min-w-[370px] md:max-w-[370px]   flex flex-col ">
           <h1 className="text-4xl font-medium mb-6">{title}</h1>
           <p className="mb-12">{description}</p>
           {children}

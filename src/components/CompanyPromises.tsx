@@ -22,7 +22,7 @@ function CompanyPromises() {
     },
   ];
   return (
-    <div className="flex gap-20 justify-center my-36">
+    <div className="flex gap-20 justify-center my-36 flex-wrap">
       {data.map((item: any) => {
         return (
           <div className="flex flex-col justify-center items-center">

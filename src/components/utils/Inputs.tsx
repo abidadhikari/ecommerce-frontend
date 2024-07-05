@@ -42,8 +42,8 @@ export const TextInput = (props: any) => {
         <div>{label}</div>
       </label>
       <input
-        className={`p-2 px-4 rounded-md w-full outline-none border
-            border-[#000000] focus:border-indigo-400  hover:border-indigo-4 `}
+        className={`p-2 px-4 rounded-md w-full outline-none border bg-[#F5F5F5] text-[#00000084]
+            border-[#F5F5F5] focus:border-indigo-400  hover:border-indigo-4 `}
         autoComplete="off"
         id={name}
         {...(register && register(name))}

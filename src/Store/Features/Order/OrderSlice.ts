@@ -20,6 +20,7 @@ const initialState: any = {
   update_success: false,
   delete_loading: false,
   delete_success: false,
+  currOrderStatus: {},
   myOrders: [],
   allOrders: [],
   singleOrder: {},
@@ -106,7 +107,7 @@ const orderSlice = createSlice({
       })
       .addCase(placeOrders.fulfilled, (state, action) => {
         state.loading = false;
-        // state.cart = action.payload.data;
+        state.currOrderStatus = action.payload.data;
         state.success = true;
       })
       .addCase(placeOrders.rejected, (state, action) => {
