@@ -31,6 +31,7 @@ import LandingCategoryPage from "./pages/LandingCategoryPage";
 import AdminLoginPage from "./pages/Admin/AdminLoginPage";
 import OrderConfirmPage from "./pages/OrderConfirmPage";
 import OrdersDetailPage from "./pages/Admin/OrdersDetailPage";
+import Errorpage from "./pages/Errorpage";
 
 function App() {
   return (
@@ -81,6 +82,8 @@ function App() {
               <Route path="/categories" element={<CategoriesPage />} />
               <Route path="/settings" element={<SettingsPage />} />
             </Route>
+            
+            <Route path="*" element= {<Errorpage />}/>
           </Routes>
         </BrowserRouter>
       </GoogleOAuthProvider>
