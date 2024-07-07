@@ -79,7 +79,7 @@ function ProductsPage(props: any) {
                 <tr key={index}>
                   <td style={{ minWidth: 150 }}>
                     <div className="flex items-center gap-3  h-full">
-                      <div className="h-10 w-10 bg-slate-400">
+                      <div className="h-10 w-10 min-w-10 bg-slate-400">
                         <img
                           src={product?.thumbnail ?? "/noImage.jpg"}
                           className="h-full w-full object-contain"

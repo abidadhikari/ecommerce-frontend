@@ -79,7 +79,7 @@ function HomePage() {
           <div className="flex flex-wrap gap-5 justify-center md:justify-between my-10">
             {!products.loading &&
               products?.products?.map((e: any, index: number) => {
-                if (index > 4 && index < 9)
+                if (index > 3 && index < 9)
                   return (
                     <ProductCard
                       key={index}

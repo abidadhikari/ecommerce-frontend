@@ -4,24 +4,34 @@ import useQuery from "../helper/useQuery";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../Store/store";
 import {
+  fetchAllProducts,
   fetchSingleProductDetail,
   getSingleProduct,
 } from "../Store/Features/Product/ProductAction";
 import Spinner from "../components/Basic/Spinner";
 import ProductsSection from "../components/Product/ProductsSection";
 import { Rating } from "@mui/material";
+import ProductCard from "../components/Product/ProductCard";
+import { ButtonPrimary } from "../components/utils/Buttons";
+import { updateCart } from "../Store/Features/Cart/CartAction";
+import IsAuthenticated from "../components/AuthTools/isAuthenticated";
 
 function ProductDetailPage(props: any) {
   const [currLargeImage, setCurrLargeImage] = useState(0);
   const query = useQuery();
   const dispatch = useDispatch<AppDispatch>();
   const product = useSelector((state: RootState) => state.productSlice);
+  const cart = useSelector((state: RootState) => state.cartSlice);
 
   console.log(query, query.params, product.singleProduct);
 
   useEffect(() => {
     // dispatch(fetchSingleProductDetail(query?.productId));
     if (query?.productId) dispatch(getSingleProduct(query?.productId));
+  }, [query?.productId]);
+
+  useEffect(() => {
+    dispatch(fetchAllProducts());
   }, []);
 
   return (
@@ -91,10 +101,12 @@ function ProductDetailPage(props: any) {
                   </span>
                 </div>
                 <p>{product.singleProduct?.description}</p>
+
                 <div className="bar h-[1px] w-full bg-black my-6"></div>
+
                 <div className="border border-[#00000080] rounded-[4px]">
                   <div className="flex items-center p-4 gap-4">
-                    <div>DT</div>
+                    <div></div>
                     <div className="flex flex-col gap-2">
                       <div className="font-medium">Free Delivery</div>
                       <div className="text-xs underline">
@@ -104,7 +116,7 @@ function ProductDetailPage(props: any) {
                   </div>
                   <div className="bar h-[1px] w-full bg-black "></div>
                   <div className="flex items-center p-4 gap-4">
-                    <div>DT</div>
+                    <div></div>
                     <div className="flex flex-col gap-2">
                       <div className="font-medium">Return Delivery</div>
                       <div className="text-xs underline">
@@ -113,11 +125,70 @@ function ProductDetailPage(props: any) {
                     </div>
                   </div>
                 </div>
+
+                {/* ADD TO CART BUTTON  */}
+
+                <div className="buy-now-btn-container mt-4">
+                  {cart?.cart?.filter((e: any) => {
+                    return e.productId === product.singleProduct?.id;
+                  })?.length !== 0 ? (
+                    <button
+                      type="button"
+                      className="add-to-cart-btn bg-[#DB4444] text-white w-full  items-center justify-center p-2 cursor-pointer  flex  "
+                      onClick={() => {
+                        dispatch(
+                          updateCart({
+                            body: {
+                              productId: product.singleProduct?.id,
+                              count: 0,
+                            },
+                          })
+                        );
+                      }}
+                    >
+                      Remove From Cart
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      className="add-to-cart-btn bg-black text-white  w-full  items-center justify-center p-2 cursor-pointer  flex  "
+                      onClick={() => {
+                        dispatch(
+                          updateCart({
+                            body: {
+                              productId: product.singleProduct?.id,
+                              count: 1,
+                            },
+                          })
+                        );
+                      }}
+                    >
+                      Add To Cart
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
 
-            <ProductsSection title="Related Item">
-              Hello products
+            <ProductsSection title="Related Item" bigTitle="You may also like">
+              <div className="list flex justify-between mt-5">
+                {!product.loading &&
+                  product?.products?.map((e: any, index: number) => {
+                    if (index < 4)
+                      return (
+                        <ProductCard
+                          key={index}
+                          title={e.title}
+                          image={e.thumbnail}
+                          rating={e.rating}
+                          stock={e.stock}
+                          productId={e.id}
+                          price={e.price}
+                          product={e}
+                        />
+                      );
+                  })}
+              </div>
             </ProductsSection>
           </>
         )}

@@ -105,12 +105,13 @@ function OrderConfirmPage(props: any) {
 
   return (
     <LandingLayout>
-      ORDER PAGE
       <div className="container ">
-        <h1>Billing Details</h1>
+        <h1 className="mt-10 mb-10 pb-2 border-b border-gray-400">
+          Billing Details
+        </h1>
         <div className="flex justify-between mb-10">
-          <div className="form_left">sdaf</div>
-          <div className="item_right">
+          {/* <div className="form_left">sdaf</div> */}
+          <div className="item_right  w-full">
             <div className="small_row flex flex-col">
               {cart.cart?.map((item: any, index: number) => {
                 return <SmallProductRow item={item.product} data={item} />;

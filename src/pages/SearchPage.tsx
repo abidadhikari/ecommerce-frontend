@@ -25,8 +25,8 @@ function SearchPage(props: any) {
   return (
     <LandingLayout>
       <div className="container py-20">
-        {product.loading && "LOAFING"}
-        {!product.loading && product.searchProducts?.length}
+        {product.loading && "LOADING"}
+        {/* {!product.loading && product.searchProducts?.length} */}
         <div className=" flex items-center justify-center mb-10">
           <form
             className="w-[70%] m-auto flex items-center justify-center relative"
@@ -52,7 +52,9 @@ function SearchPage(props: any) {
             </button>
           </form>
         </div>
-        SEARCH PAGE {query}{" "}
+        {/* SEARCH PAGE {query}  */}
+        <br />
+        <br />
         <div className="grid grid-cols-4 gap-5 justify-between">
           {!product.loading &&
             product.searchProducts?.map((item: any) => {

@@ -46,7 +46,7 @@ function Header() {
         <Link onClick={doSomething} to="/about">
           About
         </Link>
-        {IsAdmin() && "ADMIN"}
+        {/* {IsAdmin() && "ADMIN"} */}
 
         {IsAuthenticated() ? (
           <></>

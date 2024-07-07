@@ -26,7 +26,7 @@ function ProductCard(props: any) {
         ) : (
           ""
         )}
-        <img src={image} alt="" className="object-contain" />
+        <img src={image} alt="" className="object-cover" />
 
         {IsAuthenticated() ? (
           <>
@@ -74,10 +74,12 @@ function ProductCard(props: any) {
         <h3 className="font-medium  text-base mb-2">{title}</h3>
         <div className="price-row flex gap-3 mb-2">
           <div className="curr-price text-[#DB4444]">${price}</div>
-          {product?.crossedPrice && product?.crossedPrice !== 0 && (
+          {product?.crossedPrice && product?.crossedPrice !== 0 ? (
             <div className="crossed-price line-through opacity-50">
               ${product?.crossedPrice}
             </div>
+          ) : (
+            ""
           )}
         </div>
         <div className="rating-row text-sm flex items-center gap-2">
